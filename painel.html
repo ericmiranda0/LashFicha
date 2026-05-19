@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel de Clientes — Lash Design</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:wght@300;400;500&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --gold: #C9A96E;
+      --gold-light: #E8D5B0;
+      --gold-dark: #8B6914;
+      --black: #0A0A0A;
+      --dark: #141414;
+      --card: #1A1A1A;
+      --border: rgba(201, 169, 110, 0.2);
+      --border-focus: rgba(201, 169, 110, 0.6);
+      --text: #F5F0E8;
+      --text-muted: rgba(245, 240, 232, 0.5);
+      --input-bg: rgba(255, 255, 255, 0.04);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--black);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+      padding: 0;
+    }
+
+    .header {
+      background: linear-gradient(180deg, #0A0A0A 0%, #111008 100%);
+      padding: 32px 24px 24px;
+      text-align: center;
+      position: relative;
+      border-bottom: 0.5px solid var(--border);
+    }
+
+    .header h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 300;
+      color: var(--text);
+    }
+
+    .header h1 em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 24px 16px 80px;
+    }
+
+    .search-box {
+      margin-bottom: 24px;
+      position: relative;
+    }
+
+    .search-box input {
+      width: 100%;
+      background: var(--input-bg);
+      border: 0.5px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      padding: 14px 16px 14px 40px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .search-box input:focus {
+      border-color: var(--gold);
+    }
+
+    .search-box .icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--gold);
+      font-size: 14px;
+    }
+
+    .loader {
+      text-align: center;
+      color: var(--gold);
+      font-size: 14px;
+      margin-top: 40px;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 0.5;
+      }
+
+      50% {
+        opacity: 1;
+      }
+    }
+
+    .client-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .client-card {
+      background: var(--input-bg);
+      border: 0.5px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .client-card:hover {
+      border-color: var(--gold);
+      background: rgba(201, 169, 110, 0.05);
+    }
+
+    .client-info h3 {
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--gold-light);
+      margin-bottom: 4px;
+    }
+
+    .client-info p {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .client-card .arrow {
+      color: var(--gold);
+      font-size: 18px;
+    }
+
+    /* Modal Details */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      display: none;
+      opacity: 0;
+      transition: opacity 0.3s;
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+    }
+
+    .modal-overlay.show {
+      opacity: 1;
+    }
+
+    .modal-content {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--card);
+      border-top: 1px solid var(--gold);
+      border-radius: 20px 20px 0 0;
+      padding: 24px 20px 40px;
+      z-index: 1001;
+      max-height: 85vh;
+      overflow-y: auto;
+      transform: translateY(100%);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-content.show {
+      transform: translateY(0);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 0.5px solid var(--border);
+    }
+
+    .modal-header h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      color: var(--gold-light);
+      font-weight: 300;
+      margin-bottom: 4px;
+    }
+
+    .modal-header p {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .btn-close {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 28px;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .detail-section {
+      margin-bottom: 24px;
+    }
+
+    .detail-section h4 {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .detail-section h4::after {
+      content: '';
+      flex: 1;
+      height: 0.5px;
+      background: var(--border);
+    }
+
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 0.5px dashed rgba(255, 255, 255, 0.05);
+      font-size: 14px;
+    }
+
+    .detail-row:last-child {
+      border-bottom: none;
+    }
+
+    .detail-label {
+      color: var(--text-muted);
+      flex: 1;
+    }
+
+    .detail-value {
+      color: var(--text);
+      font-weight: 400;
+      text-align: right;
+      max-width: 60%;
+      word-break: break-word;
+    }
+
+    .badge-sim {
+      background: rgba(201, 169, 110, 0.15);
+      color: var(--gold);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .mapping-eyes {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      background: var(--input-bg);
+      padding: 16px;
+      border-radius: 8px;
+      border: 0.5px solid var(--border);
+    }
+
+    .eye-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .eye-name {
+      font-size: 12px;
+      color: var(--gold);
+      width: 25px;
+      text-align: right;
+    }
+
+    .eye-sizes {
+      display: flex;
+      flex: 1;
+      gap: 4px;
+    }
+
+    .size-box {
+      flex: 1;
+      background: rgba(0, 0, 0, 0.5);
+      border: 0.5px solid var(--border);
+      border-radius: 4px;
+      text-align: center;
+      padding: 6px 0;
+      font-size: 13px;
+      color: var(--text);
+    }
+
+    .size-box.empty {
+      color: var(--text-muted);
+      opacity: 0.3;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    /* Bottom Navigation */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(10, 10, 10, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-top: 0.5px solid var(--border);
+      display: flex;
+      justify-content: space-around;
+      padding: 12px 16px 24px;
+      z-index: 900;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      text-decoration: none;
+      color: var(--text-muted);
+      flex: 1;
+      transition: all 0.2s;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .nav-item.active {
+      color: var(--gold);
+    }
+
+    .nav-icon {
+      font-size: 20px;
+    }
+
+    .nav-label {
+      font-size: 10px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="header">
+    <h1>Painel <em>Clientes</em></h1>
+  </div>
+
+  <div class="container">
+    <div class="search-box">
+      <span class="icon">🔍</span>
+      <input type="text" id="searchInput" placeholder="Buscar por Nome, CPF ou WhatsApp...">
+    </div>
+
+    <div id="loader" class="loader">Carregando fichas...</div>
+
+    <div id="clientList" class="client-list"></div>
+    <div id="emptyState" class="empty-state" style="display:none;">Nenhuma ficha encontrada.</div>
+  </div>
+
+  <!-- Modal Details -->
+  <div class="modal-overlay" id="modalOverlay" onclick="closeModal()"></div>
+  <div class="modal-content" id="modalContent">
+    <div class="modal-header">
+      <div>
+        <h2 id="mName">Nome da Cliente</h2>
+        <p id="mDate">Data</p>
+      </div>
+      <button class="btn-close" onclick="closeModal()">×</button>
+    </div>
+
+    <div id="modalBody">
+      <!-- Injetado via JS -->
+    </div>
+  </div>
+
+  <script>
+    // ⚠️ COLOQUE AQUI A MESMA URL DO APPS SCRIPT USADA NA FICHA
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzeVCfGfZdIr4sXMkfkq-kD07WDv7eutkOy5CCN1r2UzAfWVN-UqczJEYAhMZOpl7Db/exec';
+
+    let clientsData = [];
+
+    async function loadData() {
+      if (APPS_SCRIPT_URL === 'COLE_AQUI_A_URL_DO_APPS_SCRIPT') {
+        document.getElementById('loader').textContent = "Configure a URL do Apps Script primeiro no código HTML.";
+        return;
+      }
+
+      try {
+        const res = await fetch(APPS_SCRIPT_URL);
+        const data = await res.json();
+
+        if (data.error) {
+          throw new Error(data.error);
+        }
+
+        clientsData = data;
+        document.getElementById('loader').style.display = 'none';
+        renderList(clientsData);
+      } catch (err) {
+        document.getElementById('loader').textContent = "Erro ao carregar os dados. Verifique a URL do Apps Script e certifique-se de que publicou como Aplicativo da Web.";
+        console.error(err);
+      }
+    }
+
+    function renderList(list) {
+      const container = document.getElementById('clientList');
+      const emptyState = document.getElementById('emptyState');
+
+      container.innerHTML = '';
+
+      if (list.length === 0) {
+        emptyState.style.display = 'block';
+        return;
+      }
+
+      emptyState.style.display = 'none';
+
+      list.forEach((client, index) => {
+        // Ignora linhas vazias
+        if (!client.Nome) return;
+
+        const card = document.createElement('div');
+        card.className = 'client-card';
+        card.onclick = () => openModal(client);
+
+        card.innerHTML = `
+          <div class="client-info">
+            <h3>${client.Nome}</h3>
+            <p>${client.WhatsApp || 'Sem telefone'}</p>
+          </div>
+          <span class="arrow">›</span>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // Busca
+    document.getElementById('searchInput').addEventListener('input', (e) => {
+      const term = e.target.value.toLowerCase();
+      const filtered = clientsData.filter(c => {
+        const n = (c.Nome || '').toString().toLowerCase();
+        const w = (c.WhatsApp || '').toString().toLowerCase();
+        const cpf = (c.CPF || '').toString().toLowerCase();
+        return n.includes(term) || w.includes(term) || cpf.includes(term);
+      });
+      renderList(filtered);
+    });
+
+    function openModal(client) {
+      document.getElementById('mName').textContent = client.Nome;
+      document.getElementById('mDate').textContent = client['Data/Hora'] || '';
+
+      const body = document.getElementById('modalBody');
+      body.innerHTML = '';
+
+      // 1. Dados Pessoais
+      let html = `<div class="detail-section"><h4>Dados Pessoais</h4>`;
+      const personalFields = ['WhatsApp', 'CPF', 'Email', 'Instagram', 'Nascimento', 'Endereço'];
+      personalFields.forEach(f => {
+        if (client[f]) {
+          html += `<div class="detail-row"><span class="detail-label">${f}</span><span class="detail-value">${client[f]}</span></div>`;
+        }
+      });
+      html += `</div>`;
+
+      // 2. Saúde
+      const healthFields = [
+        'Gestante', 'Procedimento nos Olhos', 'Alergia', 'Hormonal/Tireoide',
+        'Ocular', 'Oncológico', 'Maquiagem'
+      ];
+
+      let healthHtml = '';
+      healthFields.forEach(f => {
+        if (client[f] === 'Sim') {
+          healthHtml += `<div class="detail-row"><span class="detail-label">${f}</span><span class="detail-value badge-sim">Sim</span></div>`;
+        }
+      });
+      if (client['Obs. Médicas']) {
+        healthHtml += `<div class="detail-row" style="flex-direction:column; gap:4px; border:none;">
+          <span class="detail-label" style="color:var(--gold)">Observações Médicas:</span>
+          <span class="detail-value" style="text-align:left; max-width:100%;">${client['Obs. Médicas']}</span>
+        </div>`;
+      }
+
+      if (healthHtml) {
+        html += `<div class="detail-section"><h4>Saúde (Atenção)</h4>${healthHtml}</div>`;
+      }
+
+      // 3. Procedimento
+      let procHtml = '';
+      const procFields = ['Técnica', 'Cola', 'Espessura', 'Curvatura', 'Fio', 'Lado que Dorme'];
+      procFields.forEach(f => {
+        if (client[f]) {
+          procHtml += `<div class="detail-row"><span class="detail-label">${f}</span><span class="detail-value">${client[f]}</span></div>`;
+        }
+      });
+
+      // Mapping Visual
+      const hasMapping = client.OE1 || client.OD1 || client.OE2 || client.OD2;
+      if (hasMapping) {
+        let oe = '', od = '';
+        for (let i = 1; i <= 7; i++) {
+          const ve = client['OE' + i] || '-';
+          const vd = client['OD' + i] || '-';
+          oe += `<div class="size-box ${ve === '-' ? 'empty' : ''}">${ve}</div>`;
+          od += `<div class="size-box ${vd === '-' ? 'empty' : ''}">${vd}</div>`;
+        }
+
+        procHtml += `
+          <div class="detail-row" style="flex-direction:column; gap:8px; border:none; padding-top:16px;">
+            <span class="detail-label">Mapping Visual:</span>
+            <div class="mapping-eyes">
+              <div class="eye-row"><span class="eye-name">OE</span><div class="eye-sizes">${oe}</div></div>
+              <div class="eye-row"><span class="eye-name">OD</span><div class="eye-sizes">${od}</div></div>
+            </div>
+          </div>
+        `;
+      }
+
+      if (client['Obs. Procedimento']) {
+        procHtml += `<div class="detail-row" style="flex-direction:column; gap:4px; border:none; margin-top:8px;">
+          <span class="detail-label" style="color:var(--gold)">Obs. Procedimento:</span>
+          <span class="detail-value" style="text-align:left; max-width:100%;">${client['Obs. Procedimento']}</span>
+        </div>`;
+      }
+
+      if (procHtml) {
+        html += `<div class="detail-section"><h4>Procedimento</h4>${procHtml}</div>`;
+      }
+
+      body.innerHTML = html;
+
+      // Mostrar modal
+      document.getElementById('modalOverlay').style.display = 'block';
+      document.getElementById('modalContent').style.display = 'block';
+      setTimeout(() => {
+        document.getElementById('modalOverlay').classList.add('show');
+        document.getElementById('modalContent').classList.add('show');
+      }, 10);
+    }
+
+    function closeModal() {
+      document.getElementById('modalOverlay').classList.remove('show');
+      document.getElementById('modalContent').classList.remove('show');
+      setTimeout(() => {
+        document.getElementById('modalOverlay').style.display = 'none';
+        document.getElementById('modalContent').style.display = 'none';
+      }, 300);
+    }
+
+    // Inicializa
+    loadData();
+  </script>
+
+  <nav class="bottom-nav">
+    <a href="index.html" class="nav-item">
+      <span class="nav-icon">🏠</span>
+      <span class="nav-label">Início</span>
+    </a>
+    <a href="nova_ficha.html" class="nav-item">
+      <span class="nav-icon">➕</span>
+      <span class="nav-label">Nova Ficha</span>
+    </a>
+    <a href="painel.html" class="nav-item active">
+      <span class="nav-icon">📋</span>
+      <span class="nav-label">Clientes</span>
+    </a>
+  </nav>
+</body>
+
+</html>

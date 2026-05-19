@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ficha de Avaliação — Lash Design</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:wght@300;400;500&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --gold: #C9A96E;
+      --gold-light: #E8D5B0;
+      --gold-dark: #8B6914;
+      --black: #0A0A0A;
+      --dark: #141414;
+      --card: #1A1A1A;
+      --border: rgba(201, 169, 110, 0.2);
+      --border-focus: rgba(201, 169, 110, 0.6);
+      --text: #F5F0E8;
+      --text-muted: rgba(245, 240, 232, 0.5);
+      --input-bg: rgba(255, 255, 255, 0.04);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--black);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+      padding: 0;
+    }
+
+    .hero {
+      background: linear-gradient(180deg, #0A0A0A 0%, #111008 100%);
+      padding: 48px 24px 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -80px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(ellipse, rgba(201, 169, 110, 0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 38px;
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .hero-sub {
+      font-size: 13px;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+      margin-top: 10px;
+    }
+
+    .divider-gold {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 20px 24px 0;
+    }
+
+    .divider-gold span {
+      flex: 1;
+      height: 0.5px;
+      background: var(--border);
+    }
+
+    .divider-gold i {
+      color: var(--gold);
+      font-size: 10px;
+    }
+
+    .container {
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 0 16px 80px;
+    }
+
+    .section-label {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin: 32px 0 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 0.5px;
+      background: var(--border);
+    }
+
+    .field {
+      margin-bottom: 14px;
+    }
+
+    label {
+      display: block;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    textarea,
+    select {
+      width: 100%;
+      background: var(--input-bg);
+      border: 0.5px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 300;
+      padding: 13px 16px;
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+      -webkit-appearance: none;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      border-color: var(--border-focus);
+      background: rgba(201, 169, 110, 0.04);
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: rgba(245, 240, 232, 0.2);
+    }
+
+    select option {
+      background: #1A1A1A;
+      color: var(--text);
+    }
+
+    textarea {
+      resize: none;
+      min-height: 80px;
+    }
+
+    .row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    /* Health questions */
+    .health-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      background: var(--input-bg);
+      border: 0.5px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 8px;
+      gap: 12px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .health-item:hover {
+      border-color: var(--border-focus);
+      background: rgba(201, 169, 110, 0.04);
+    }
+
+    .health-item p {
+      font-size: 13px;
+      color: var(--text);
+      line-height: 1.4;
+      font-weight: 300;
+    }
+
+    .toggle-group {
+      display: flex;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+
+    .toggle-btn {
+      border: 0.5px solid var(--border);
+      background: transparent;
+      color: var(--text-muted);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      padding: 5px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+
+    .toggle-btn.active-sim {
+      background: rgba(201, 169, 110, 0.15);
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .toggle-btn.active-nao {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.25);
+      color: var(--text);
+    }
+
+    /* Mapping selector */
+    .mapping-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .map-option {
+      border: 0.5px solid var(--border);
+      background: var(--input-bg);
+      color: var(--text-muted);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 400;
+      padding: 12px 8px;
+      border-radius: 8px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.15s;
+    }
+
+    .map-option.active {
+      border-color: var(--gold);
+      background: rgba(201, 169, 110, 0.1);
+      color: var(--gold);
+    }
+
+    .map-option .icon {
+      font-size: 20px;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    /* Sleep side */
+    .side-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .side-btn {
+      border: 0.5px solid var(--border);
+      background: var(--input-bg);
+      color: var(--text-muted);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      padding: 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.15s;
+    }
+
+    .side-btn.active {
+      border-color: var(--gold);
+      background: rgba(201, 169, 110, 0.1);
+      color: var(--gold);
+    }
+
+    /* Submit */
+    .submit-area {
+      margin-top: 36px;
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 16px;
+      background: var(--gold);
+      border: none;
+      border-radius: 8px;
+      color: var(--black);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.1s;
+      position: relative;
+    }
+
+    .btn-submit:hover {
+      opacity: 0.9;
+    }
+
+    .btn-submit:active {
+      transform: scale(0.99);
+    }
+
+    .btn-submit:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .disclaimer {
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-top: 16px;
+      padding: 14px 16px;
+      border: 0.5px solid var(--border);
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    /* Success state */
+    .success-screen {
+      display: none;
+      text-align: center;
+      padding: 60px 24px;
+    }
+
+    .success-screen .icon {
+      font-size: 48px;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 20px;
+    }
+
+    .success-screen h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 300;
+      margin-bottom: 8px;
+    }
+
+    .success-screen p {
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    /* Status message */
+    .status-msg {
+      display: none;
+      font-size: 13px;
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-top: 12px;
+      text-align: center;
+    }
+
+    .status-msg.error {
+      background: rgba(255, 80, 80, 0.1);
+      border: 0.5px solid rgba(255, 80, 80, 0.3);
+      color: #FF8080;
+    }
+
+    .status-msg.success {
+      background: rgba(201, 169, 110, 0.1);
+      border: 0.5px solid var(--border-focus);
+      color: var(--gold);
+    }
+
+    /* Editor Visual de Mapping */
+    .eyes-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 8px;
+    }
+
+    .eye-box {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .eye-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      text-align: center;
+    }
+
+    .eye-arch {
+      display: flex;
+      height: 54px;
+      background: var(--input-bg);
+      border: 0.5px solid var(--border);
+      border-radius: 100px 100px 8px 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .eye-segment {
+      flex: 1;
+      border-right: 0.5px dashed rgba(201, 169, 110, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .eye-segment:last-child {
+      border-right: none;
+    }
+
+    .eye-segment:hover {
+      background: rgba(201, 169, 110, 0.1);
+      color: var(--gold-light);
+    }
+
+    .eye-segment.has-value {
+      color: var(--gold);
+      background: rgba(201, 169, 110, 0.05);
+    }
+
+    .eye-segment.active-editing {
+      background: rgba(201, 169, 110, 0.25);
+      color: var(--black);
+      text-shadow: none;
+    }
+
+    /* Keyboard Modal */
+    .keyboard-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .keyboard-overlay.show {
+      opacity: 1;
+    }
+
+    .keyboard-modal {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(20, 20, 20, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-top: 1px solid var(--border-focus);
+      border-radius: 20px 20px 0 0;
+      padding: 24px 20px 40px;
+      z-index: 1000;
+      transform: translateY(100%);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .keyboard-modal.show {
+      transform: translateY(0);
+    }
+
+    .keyboard-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .keyboard-title {
+      font-size: 12px;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    .keyboard-close {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 24px;
+      cursor: pointer;
+      line-height: 1;
+      padding: 0 4px;
+    }
+
+    .keyboard-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .key-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 0.5px solid rgba(201, 169, 110, 0.2);
+      border-radius: 10px;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 18px;
+      font-weight: 400;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.1s;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .key-btn:active {
+      background: var(--gold);
+      color: var(--black);
+      transform: scale(0.95);
+    }
+
+    .key-btn.action-btn {
+      background: rgba(201, 169, 110, 0.1);
+      color: var(--gold);
+      border-color: var(--gold);
+    }
+
+    .key-btn.action-btn:active {
+      background: var(--gold);
+      color: var(--black);
+    }
+
+    /* Bottom Navigation */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(10, 10, 10, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-top: 0.5px solid var(--border);
+      display: flex;
+      justify-content: space-around;
+      padding: 12px 16px 24px;
+      z-index: 900;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      text-decoration: none;
+      color: var(--text-muted);
+      flex: 1;
+      transition: all 0.2s;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .nav-item.active {
+      color: var(--gold);
+    }
+
+    .nav-icon {
+      font-size: 20px;
+    }
+
+    .nav-label {
+      font-size: 10px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="hero">
+    <p class="hero-eyebrow">✦ Ficha de Avaliação</p>
+    <h1>Lash <em>Design</em></h1>
+    <p class="hero-sub">Preencha com cuidado para um atendimento perfeito</p>
+  </div>
+
+  <div class="divider-gold"><span></span><span></span></div>
+
+  <div class="container">
+
+
+
+    <form id="fichaForm" novalidate>
+
+      <!-- DADOS PESSOAIS -->
+      <p class="section-label">Dados Pessoais</p>
+
+      <div class="field">
+        <label>Nome completo *</label>
+        <input type="text" id="nome" placeholder="Ana Silva" required>
+      </div>
+
+      <div class="row-2">
+        <div class="field">
+          <label>WhatsApp *</label>
+          <input type="tel" id="whatsapp" placeholder="(88) 99999-9999" required>
+        </div>
+        <div class="field">
+          <label>CPF</label>
+          <input type="text" id="cpf" placeholder="000.000.000-00">
+        </div>
+      </div>
+
+      <div class="field">
+        <label>E-mail</label>
+        <input type="email" id="email" placeholder="ana@email.com">
+      </div>
+
+      <div class="row-2">
+        <div class="field">
+          <label>Instagram</label>
+          <input type="text" id="instagram" placeholder="@seuinstagram">
+        </div>
+        <div class="field">
+          <label>Data de nascimento</label>
+          <input type="text" id="nascimento" placeholder="DD/MM/AAAA">
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Endereço</label>
+        <input type="text" id="endereco" placeholder="Rua, número — Bairro">
+      </div>
+
+      <!-- SAÚDE -->
+      <p class="section-label">Saúde</p>
+
+      <div id="healthQuestions"></div>
+
+      <div class="field" style="margin-top:12px">
+        <label>Observações médicas</label>
+        <textarea id="obsMedicas" placeholder="Informe qualquer problema de saúde relevante…"></textarea>
+      </div>
+
+      <!-- PROCEDIMENTO -->
+      <p class="section-label">Procedimento</p>
+
+      <div class="field">
+        <label>Técnica</label>
+        <input type="text" id="tecnica" placeholder="Ex: Volume Russo, Fio a Fio…">
+      </div>
+
+      <div class="row-2">
+        <div class="field">
+          <label>Cola</label>
+          <input type="text" id="cola" placeholder="Ex: Angel">
+        </div>
+        <div class="field">
+          <label>Espessura</label>
+          <input type="text" id="espessura" placeholder="Ex: 0.07">
+        </div>
+      </div>
+
+      <div class="row-2">
+        <div class="field">
+          <label>Curvatura</label>
+          <input type="text" id="curvatura" placeholder="Ex: D, C, L">
+        </div>
+        <div class="field">
+          <label>Fio</label>
+          <input type="text" id="fio" placeholder="Ex: Silk, Mink">
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Mapping Visual</label>
+        <div class="eyes-wrapper">
+          <!-- Olho Esquerdo -->
+          <div class="eye-box">
+            <span class="eye-label">Olho Esquerdo</span>
+            <div class="eye-arch" id="eyeLeft">
+              <div class="eye-segment" onclick="openKeyboard('OE', 0)">-</div>
+              <div class="eye-segment" onclick="openKeyboard('OE', 1)">-</div>
+              <div class="eye-segment" onclick="openKeyboard('OE', 2)">-</div>
+              <div class="eye-segment" onclick="openKeyboard('OE', 3)">-</div>
+              <div class="eye-segment" onclick="openKeyboard('OE', 4)">-</div>
+              <div class="eye-segment" onclick="openKeyboard('OE', 5)">-</div>
+              <div class="eye-segment" onclick="openKeyboard('OE', 6)">-</div>
+            </div>
+          </div>
+          <!-- Olho Direito -->
+          <div class="eye-box">
+            <span class="eye-label">Olho Direito</span>
+            <div class="eye-arch" id="eyeRight">
+              <div class="eye-segment" onclick="openKeyboard('OD', 0)">-</div>
+              <div class="eye-segment" onclick="openKeyboard('OD', 1)">-</div>
+              <div class="eye-segment" onclick="openKeyboard('OD', 2)">-</div>
+              <div class="eye-segment" onclick="openKeyboard('OD', 3)">-</div>
+              <div class="eye-segment" onclick="openKeyboard('OD', 4)">-</div>
+              <div class="eye-segment" onclick="openKeyboard('OD', 5)">-</div>
+              <div class="eye-segment" onclick="openKeyboard('OD', 6)">-</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Lado que dorme</label>
+        <div class="side-group">
+          <button type="button" class="side-btn" data-val="Direito" onclick="selectSide(this)">← Direito</button>
+          <button type="button" class="side-btn" data-val="Esquerdo" onclick="selectSide(this)">Esquerdo →</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Observações do procedimento</label>
+        <textarea id="obsProc" placeholder="Preferências, restrições, histórico…"></textarea>
+      </div>
+
+      <!-- SUBMIT -->
+      <div class="submit-area">
+        <p class="disclaimer">
+          Declaro que as informações preenchidas são verdadeiras, isentando a profissional de qualquer responsabilidade
+          por dados omitidos.
+        </p>
+        <button type="submit" class="btn-submit" id="btnSubmit">
+          Enviar Ficha
+        </button>
+        <div class="status-msg" id="statusMsg"></div>
+      </div>
+
+    </form>
+
+    <div class="success-screen" id="successScreen">
+      <span class="icon">✦</span>
+      <h2>Ficha enviada</h2>
+      <p>Seus dados foram salvos com sucesso.<br>Nos vemos em breve! 🌙</p>
+    </div>
+
+  </div>
+
+  <div class="keyboard-overlay" id="kbOverlay" onclick="closeKeyboard()"></div>
+  <div class="keyboard-modal" id="kbModal">
+    <div class="keyboard-header">
+      <span class="keyboard-title" id="kbTitle">Tamanho</span>
+      <button type="button" class="keyboard-close" onclick="closeKeyboard()">×</button>
+    </div>
+    <div class="keyboard-grid">
+      <button type="button" class="key-btn" onclick="selectSize(7)">7</button>
+      <button type="button" class="key-btn" onclick="selectSize(8)">8</button>
+      <button type="button" class="key-btn" onclick="selectSize(9)">9</button>
+      <button type="button" class="key-btn" onclick="selectSize(10)">10</button>
+      <button type="button" class="key-btn" onclick="selectSize(11)">11</button>
+      <button type="button" class="key-btn" onclick="selectSize(12)">12</button>
+      <button type="button" class="key-btn" onclick="selectSize(13)">13</button>
+      <button type="button" class="key-btn" onclick="selectSize(14)">14</button>
+      <button type="button" class="key-btn" onclick="selectSize(15)">15</button>
+      <button type="button" class="key-btn" onclick="selectSize(16)">16</button>
+      <button type="button" class="key-btn action-btn" onclick="selectSize('-')"
+        style="grid-column: span 2;">Limpar</button>
+    </div>
+  </div>
+
+  <script>
+    // ─── CONFIGURAÇÃO ────────────────────────────────────────────────
+    // Substitua pela URL do seu Apps Script após implantar
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzeVCfGfZdIr4sXMkfkq-kD07WDv7eutkOy5CCN1r2UzAfWVN-UqczJEYAhMZOpl7Db/exec';
+    // ────────────────────────────────────────────────────────────────
+
+    const healthData = [
+      { id: 'gestante', q: 'Está gestante?' },
+      { id: 'procedOlhos', q: 'Fez procedimento nos olhos recentemente?' },
+      { id: 'alergia', q: 'Possui alergia a esmaltes, corantes ou formol?' },
+      { id: 'hormonal', q: 'Possui problemas hormonais ou distúrbios na tireoide?' },
+      { id: 'ocular', q: 'Possui glaucoma, blefarite ou problema ocular?' },
+      { id: 'oncologico', q: 'Está em tratamento oncológico?' },
+      { id: 'maquiagem', q: 'Está com maquiagem (rímel, base ou protetor solar)?' },
+    ];
+
+    const healthAnswers = {};
+    let sideVal = '';
+
+    // Mapping state
+    const visualMapping = {
+      OE: [null, null, null, null, null, null, null],
+      OD: [null, null, null, null, null, null, null]
+    };
+    let currentEye = null; // 'OE' or 'OD'
+    let currentIndex = null;
+
+    function openKeyboard(eye, index) {
+      currentEye = eye;
+      currentIndex = index;
+
+      const eyeName = eye === 'OE' ? 'Esquerdo' : 'Direito';
+      document.getElementById('kbTitle').textContent = `Tamanho (${eyeName} - Z${index + 1})`;
+
+      document.querySelectorAll('.eye-segment').forEach(el => el.classList.remove('active-editing'));
+      const eyeContainer = document.getElementById(eye === 'OE' ? 'eyeLeft' : 'eyeRight');
+      eyeContainer.children[index].classList.add('active-editing');
+
+      document.getElementById('kbOverlay').style.display = 'block';
+      document.getElementById('kbModal').style.display = 'block';
+
+      setTimeout(() => {
+        document.getElementById('kbOverlay').classList.add('show');
+        document.getElementById('kbModal').classList.add('show');
+      }, 10);
+    }
+
+    function closeKeyboard() {
+      document.getElementById('kbOverlay').classList.remove('show');
+      document.getElementById('kbModal').classList.remove('show');
+
+      document.querySelectorAll('.eye-segment').forEach(el => el.classList.remove('active-editing'));
+
+      setTimeout(() => {
+        document.getElementById('kbOverlay').style.display = 'none';
+        document.getElementById('kbModal').style.display = 'none';
+      }, 300);
+
+      currentEye = null;
+      currentIndex = null;
+    }
+
+    function selectSize(size) {
+      if (!currentEye || currentIndex === null) return;
+
+      const val = size === '-' ? null : size;
+      visualMapping[currentEye][currentIndex] = val;
+
+      const eyeContainer = document.getElementById(currentEye === 'OE' ? 'eyeLeft' : 'eyeRight');
+      const segment = eyeContainer.children[currentIndex];
+      segment.textContent = size;
+      if (val) {
+        segment.classList.add('has-value');
+      } else {
+        segment.classList.remove('has-value');
+      }
+      segment.classList.remove('active-editing');
+
+      let nextIndex = currentIndex + 1;
+      if (nextIndex < 7) {
+        openKeyboard(currentEye, nextIndex);
+      } else if (currentEye === 'OE') {
+        openKeyboard('OD', 0);
+      } else {
+        closeKeyboard();
+      }
+    }
+
+    // Build health questions
+    const hqContainer = document.getElementById('healthQuestions');
+    healthData.forEach(item => {
+      healthAnswers[item.id] = '';
+      const div = document.createElement('div');
+      div.className = 'health-item';
+      div.innerHTML = `
+    <p>${item.q}</p>
+    <div class="toggle-group">
+      <button type="button" class="toggle-btn" data-id="${item.id}" data-val="Sim" onclick="setHealth(this)">SIM</button>
+      <button type="button" class="toggle-btn" data-id="${item.id}" data-val="Não" onclick="setHealth(this)">NÃO</button>
+    </div>`;
+      hqContainer.appendChild(div);
+    });
+
+    function setHealth(btn) {
+      const id = btn.dataset.id;
+      const val = btn.dataset.val;
+      healthAnswers[id] = val;
+      document.querySelectorAll(`.toggle-btn[data-id="${id}"]`).forEach(b => {
+        b.classList.remove('active-sim', 'active-nao');
+      });
+      btn.classList.add(val === 'Sim' ? 'active-sim' : 'active-nao');
+    }
+
+
+
+    function selectSide(btn) {
+      document.querySelectorAll('.side-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      sideVal = btn.dataset.val;
+    }
+
+    // Format CPF
+    document.getElementById('cpf').addEventListener('input', function () {
+      let v = this.value.replace(/\D/g, '');
+      if (v.length > 11) v = v.slice(0, 11);
+      v = v.replace(/(\d{3})(\d)/, '$1.$2')
+        .replace(/(\d{3})\.(\d{3})(\d)/, '$1.$2.$3')
+        .replace(/\.(\d{3})(\d)/, '.$1-$2');
+      this.value = v;
+    });
+
+    // Format WhatsApp
+    document.getElementById('whatsapp').addEventListener('input', function () {
+      let v = this.value.replace(/\D/g, '');
+      if (v.length > 11) v = v.slice(0, 11);
+      if (v.length > 6) v = `(${v.slice(0, 2)}) ${v.slice(2, 7)}-${v.slice(7)}`;
+      else if (v.length > 2) v = `(${v.slice(0, 2)}) ${v.slice(2)}`;
+      this.value = v;
+    });
+
+    // Submit
+    document.getElementById('fichaForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const nome = document.getElementById('nome').value.trim();
+      const whatsapp = document.getElementById('whatsapp').value.trim();
+
+      if (!nome || !whatsapp) {
+        showStatus('Por favor, preencha nome e WhatsApp.', 'error');
+        return;
+      }
+
+      const payload = {
+        data: new Date().toLocaleString('pt-BR'),
+        nome,
+        whatsapp,
+        cpf: document.getElementById('cpf').value,
+        email: document.getElementById('email').value,
+        instagram: document.getElementById('instagram').value,
+        nascimento: document.getElementById('nascimento').value,
+        endereco: document.getElementById('endereco').value,
+        ...healthAnswers,
+        obsMedicas: document.getElementById('obsMedicas').value,
+        tecnica: document.getElementById('tecnica').value,
+        cola: document.getElementById('cola').value,
+        espessura: document.getElementById('espessura').value,
+        curvatura: document.getElementById('curvatura').value,
+        fio: document.getElementById('fio').value,
+        OE1: visualMapping.OE[0],
+        OE2: visualMapping.OE[1],
+        OE3: visualMapping.OE[2],
+        OE4: visualMapping.OE[3],
+        OE5: visualMapping.OE[4],
+        OE6: visualMapping.OE[5],
+        OE7: visualMapping.OE[6],
+        OD1: visualMapping.OD[0],
+        OD2: visualMapping.OD[1],
+        OD3: visualMapping.OD[2],
+        OD4: visualMapping.OD[3],
+        OD5: visualMapping.OD[4],
+        OD6: visualMapping.OD[5],
+        OD7: visualMapping.OD[6],
+        ladoDorme: sideVal,
+        obsProc: document.getElementById('obsProc').value,
+      };
+
+      const btn = document.getElementById('btnSubmit');
+      btn.disabled = true;
+      btn.textContent = 'Enviando…';
+
+      if (APPS_SCRIPT_URL === 'COLE_AQUI_A_URL_DO_APPS_SCRIPT') {
+        // Demo mode
+        console.log('📋 Dados que seriam enviados:', payload);
+        setTimeout(() => showSuccess(), 800);
+        return;
+      }
+
+      try {
+        await fetch(APPS_SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        showSuccess();
+      } catch (err) {
+        btn.disabled = false;
+        btn.textContent = 'Enviar Ficha';
+        showStatus('Erro ao enviar. Verifique a URL do Apps Script.', 'error');
+      }
+    });
+
+    function showSuccess() {
+      document.getElementById('fichaForm').style.display = 'none';
+      document.getElementById('successScreen').style.display = 'block';
+    }
+
+    function showStatus(msg, type) {
+      const el = document.getElementById('statusMsg');
+      el.textContent = msg;
+      el.className = `status-msg ${type}`;
+      el.style.display = 'block';
+    }
+  </script>
+
+  <nav class="bottom-nav">
+    <a href="index.html" class="nav-item">
+      <span class="nav-icon">🏠</span>
+      <span class="nav-label">Início</span>
+    </a>
+    <a href="nova_ficha.html" class="nav-item active">
+      <span class="nav-icon">➕</span>
+      <span class="nav-label">Nova Ficha</span>
+    </a>
+    <a href="painel.html" class="nav-item">
+      <span class="nav-icon">📋</span>
+      <span class="nav-label">Clientes</span>
+    </a>
+  </nav>
+</body>
+
+</html>

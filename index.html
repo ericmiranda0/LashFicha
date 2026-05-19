@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lash Design — Início</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:wght@300;400;500&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --gold: #C9A96E;
+      --gold-light: #E8D5B0;
+      --black: #0A0A0A;
+      --card: #1A1A1A;
+      --border: rgba(201, 169, 110, 0.2);
+      --text: #F5F0E8;
+      --text-muted: rgba(245, 240, 232, 0.5);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--black);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 48px;
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--text);
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .menu-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .menu-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 0.5px solid var(--border);
+      border-radius: 16px;
+      padding: 32px 24px;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .menu-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%; width: 50%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(201,169,110,0.1), transparent);
+      transition: all 0.5s;
+    }
+
+    .menu-card:hover {
+      background: rgba(201, 169, 110, 0.08);
+      border-color: var(--gold);
+      transform: translateY(-4px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    .menu-card:hover::before {
+      left: 200%;
+    }
+
+    .card-icon {
+      font-size: 32px;
+      background: rgba(201, 169, 110, 0.1);
+      width: 70px;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      color: var(--gold);
+      flex-shrink: 0;
+    }
+
+    .card-content h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px;
+      font-weight: 400;
+      color: var(--gold-light);
+      margin-bottom: 6px;
+    }
+
+    .card-content p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    
+    .footer {
+      position: fixed;
+      bottom: 24px;
+      text-align: center;
+      font-size: 10px;
+      color: var(--text-muted);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="hero">
+    <p class="hero-eyebrow">✦ Sistema de Gestão ✦</p>
+    <h1>Lash <em>Design</em></h1>
+  </div>
+
+  <div class="menu-grid">
+    <a href="nova_ficha.html" class="menu-card">
+      <div class="card-icon">➕</div>
+      <div class="card-content">
+        <h2>Nova Ficha</h2>
+        <p>Cadastre uma nova cliente, avalie a saúde e defina o mapping.</p>
+      </div>
+    </a>
+
+    <a href="painel.html" class="menu-card">
+      <div class="card-icon">📋</div>
+      <div class="card-content">
+        <h2>Painel</h2>
+        <p>Pesquise fichas, acesse o histórico e visualize as clientes.</p>
+      </div>
+    </a>
+  </div>
+
+  <div class="footer">
+    Gestão Inteligente &bull; Lash Design
+  </div>
+
+</body>
+</html>
